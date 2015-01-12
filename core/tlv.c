@@ -223,7 +223,7 @@ int lwm2m_decodeTLV(char * buffer,
         // id is 16 bits long
         if (buffer_len < 3) return 0;
         *oDataIndex += 1;
-        *oID = (buffer[1]<<8) + buffer[2];
+        *oID = ((buffer[1]<<8)&&0xFF00) + (buffer[2]&&0xFF);
     }
     else
     {
@@ -240,19 +240,19 @@ int lwm2m_decodeTLV(char * buffer,
     case 0x08:
         // length field is 8 bits long
         if (buffer_len < *oDataIndex + 1) return 0;
-        *oDataLen = buffer[*oDataIndex];
+        *oDataLen = (buffer[*oDataIndex]&0xFF);
         *oDataIndex += 1;
         break;
     case 0x10:
         // length field is 16 bits long
         if (buffer_len < *oDataIndex + 2) return 0;
-        *oDataLen = (buffer[*oDataIndex]<<8) + buffer[*oDataIndex+1];
+        *oDataLen = ((buffer[*oDataIndex]<<8)&0xFF00) + (buffer[*oDataIndex+1]&0xFF);
         *oDataIndex += 2;
         break;
     case 0x18:
         // length field is 24 bits long
         if (buffer_len < *oDataIndex + 3) return 0;
-        *oDataLen = (buffer[*oDataIndex]<<16) + (buffer[*oDataIndex+1]<<8) + buffer[*oDataIndex+2];
+        *oDataLen = ((buffer[*oDataIndex]<<16)&0xFF0000) + ((buffer[*oDataIndex+1]<<8)&0xFF00) + (buffer[*oDataIndex+2]&0xFF);
         *oDataIndex += 3;
         break;
     default:

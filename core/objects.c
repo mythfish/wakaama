@@ -323,7 +323,7 @@ int prv_getRegisterPayload(lwm2m_context_t * contextP,
     index = 0;
     for (i = 0 ; i < contextP->numObject ; i++)
     {
-        if (contextP->objectList[i]->objID == LWM2M_SECURITY_OBJECT_ID) continue;
+        if (contextP->objectList[i]->objID == LWM2M_SECURITY_OBJECT_ID || !contextP->objectList[i]->needRegister) continue;
 
         if (contextP->objectList[i]->instanceList == NULL)
         {

@@ -334,7 +334,7 @@ int lwm2m_update_registrations(lwm2m_context_t * contextP, uint32_t currentTime,
                 break;
             case STATE_UNKNOWN:
                 // TODO: is it disabled?
-                prv_register(contextP, targetP);
+                //prv_register(contextP, targetP);
                 break;
             case STATE_REG_PENDING:
                 break;

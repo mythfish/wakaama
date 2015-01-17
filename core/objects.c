@@ -91,8 +91,9 @@ coap_status_t object_read(lwm2m_context_t * contextP,
     if (NULL == targetP->readFunc) return METHOD_NOT_ALLOWED_4_05;
     if (targetP->instanceList == NULL)
     {
+        // CDCC: Do not need to check the object instance for object which do not need register.
         // this is a single instance object
-        if (LWM2M_URI_IS_SET_INSTANCE(uriP) && (uriP->instanceId != 0))
+        if (targetP->needRegister && LWM2M_URI_IS_SET_INSTANCE(uriP) && (uriP->instanceId != 0))
         {
             return COAP_404_NOT_FOUND;
         }
